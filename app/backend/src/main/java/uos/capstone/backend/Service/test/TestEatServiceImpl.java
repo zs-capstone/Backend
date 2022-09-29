@@ -1,21 +1,21 @@
-package uos.capstone.backend.Service.place;
+package uos.capstone.backend.Service.test;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import uos.capstone.backend.Model.Eat;
 import uos.capstone.backend.Model.Result;
-import uos.capstone.backend.Repository.place.TestEatRepository;
+import uos.capstone.backend.Repository.test.TestEatRepository;
 
 import java.util.List;
 
 @Service
-public class TestEatServiceImpl implements TestEatService {
+public class TestEatServiceImpl implements TestService {
 
     @Autowired
     TestEatRepository repository;
 
     @Override
-    public Result retrieveEatList() {
+    public Result retrieveList() {
         List<Eat> list = repository.findAll();
         Result result = new Result();
         result.setPayload(list);

@@ -1,4 +1,4 @@
-package uos.capstone.backend.Repository.place;
+package uos.capstone.backend.Repository.test;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
