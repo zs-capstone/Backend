@@ -1,2 +1,5 @@
 .env
+.DS_Store
 /app/.idea
+/app/.DS_Store
+/db/.DS_Store
