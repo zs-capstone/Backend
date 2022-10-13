@@ -11,7 +11,7 @@ psql -v ON_ERROR_STOP=1 --username "$POSTGRES_USER" --dbname "$POSTGRES_DB" <<-E
 
   DROP TABLE IF EXISTS eat;
   CREATE TABLE eat(
-    id INTEGER,
+    id BIGINT,
     contentsid VARCHAR(50),
     title VARCHAR(50),
     roadaddress VARCHAR(500),
@@ -31,7 +31,7 @@ psql -v ON_ERROR_STOP=1 --username "$POSTGRES_USER" --dbname "$POSTGRES_DB" <<-E
   );
   DROP TABLE IF EXISTS hotel;
   CREATE TABLE hotel(
-    id INTEGER,
+    id BIGINT,
     contentsid VARCHAR(50),
     title VARCHAR(50),
     roadaddress VARCHAR(500),
@@ -51,7 +51,7 @@ psql -v ON_ERROR_STOP=1 --username "$POSTGRES_USER" --dbname "$POSTGRES_DB" <<-E
   );
   DROP TABLE IF EXISTS place;
   CREATE TABLE place(
-    id INTEGER,
+    id BIGINT,
     placeid INTEGER,
     title VARCHAR(50),
     address VARCHAR(500),
@@ -76,6 +76,21 @@ psql -v ON_ERROR_STOP=1 --username "$POSTGRES_USER" --dbname "$POSTGRES_DB" <<-E
     tag VARCHAR(500),
     primary key(id)
   );
+  DROP TABLE IF EXISTS member;
+  CREATE TABLE member(
+    id SERIAL PRIMARY KEY,
+    role VARCHAR(20) DEFAULT 'ROLE_USER',
+    username VARCHAR(15) NOT NULL,
+    nickname VARCHAR(15) NOT NULL,
+    email VARCHAR(320) NOT NULL,
+    password VARCHAR(100) NOT NULL,
+    gender VARCHAR(1),
+    year VARCHAR(4),
+    month VARCHAR(2),
+    day VARCHAR(2),
+    region VARCHAR(255)
+  );
+  INSERT INTO member(role,username,nickname,email,password) VALUES ('ROLE_ADMIN','원우인','admin','idwooin@naver.com','admin1234');
   \dt
   \copy eat FROM './init_tables/eat.csv' DELIMITER ',' CSV HEADER;
   \copy hotel FROM './init_tables/hotel.csv' DELIMITER ',' CSV HEADER;

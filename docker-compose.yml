@@ -18,6 +18,16 @@ services:
     volumes:
       - ${POSTGRES_HOME_DIR}/data:/var/lib/postgresql/data # ${POSTGRES_HOME_DIR}/data 부분이 실제 PostgreSQL 저장 경로로 컨테이너 종료 또는 삭제되었을 때 내부 데이터 날림 방지하기 위한 설정
 
+  redis:
+    image: redis:alpine
+    command: redis-server --port 6379
+    container_name: jeju-redis
+    hostname: redis
+    labels:
+      - "name=redis"
+      - "mode=standalone"
+    ports:
+      - 6379:6379
   
   # api:
   #   container_name: jeju-api

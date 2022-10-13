@@ -1,8 +1,7 @@
-package uos.capstone.backend.Model;
+package uos.capstone.backend.common.domain;
 
 import lombok.Getter;
 import lombok.Setter;
-import lombok.ToString;
 
 @Getter
 @Setter

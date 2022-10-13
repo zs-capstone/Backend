@@ -7,18 +7,25 @@ spring:
 
   jpa:
     hibernate:
-      ddl-auto: none
+      ddl-auto: update
     database: postgresql
     properties:
       hibernate:
         dialect: org.hibernate.dialect.PostgreSQLDialect
         format_sql: true
-    generate-ddl: true
+    generate-ddl: false
 
   servlet:
     multipart:
       max-file-size: 5MB
       max-request-size: 5MB
+
+  redis:
+    host: localhost
+    port: 6379
+
+jwt:
+  secret: c3ByaW5nLWJvb3Qtc2VjdXJpdHktand0LXR1dG9yaWFsLWppd29vbi1zcHJpbmctYm9vdC1zZWN1cml0eS1qd3QtdHV0b3JpYWwK
 
 logging:
   level:
@@ -26,3 +33,19 @@ logging:
 
 server:
   port: 8082
+
+springdoc:
+  version: v1.0.0
+  packages-to-scan: uos.capstone.backend
+  swagger-ui:
+    path: /api-docs
+    tags-sorter: alpha
+    operations-sorter: alpha
+  api-docs:
+    path: /api-docs/json
+    groups:
+      enabled: true
+  cache:
+    disabled: true
+  default-consumes-media-type: application/json;charset=UTF-8
+  default-produces-media-type: application/json;charset=UTF-8

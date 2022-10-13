@@ -1,14 +1,13 @@
-package uos.capstone.backend.Controller.api;
+package uos.capstone.backend.home.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
-import uos.capstone.backend.Model.Result;
+import uos.capstone.backend.common.domain.Result;
 import uos.capstone.backend.Service.test.TestEatServiceImpl;
 import uos.capstone.backend.Service.test.TestHotelServiceImpl;
 import uos.capstone.backend.Service.test.TestPlaceServiceImpl;
-import uos.capstone.backend.Service.test.TestService;
 
 @Controller
 public class TestController {
