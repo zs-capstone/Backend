@@ -31,6 +31,7 @@ public class JwtTokenUtil {
                 .getBody();
     }
 
+    // 해당 token의 username 색출
     public String getUsername(String token) {
         return extractAllClaims(token).get("username", String.class);
     }

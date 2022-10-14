@@ -2,6 +2,7 @@ package uos.capstone.backend.member.config.security;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
+import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityCustomizer;
@@ -16,6 +17,7 @@ import uos.capstone.backend.member.config.jwt.JwtEntryPoint;
 
 @EnableWebSecurity
 @RequiredArgsConstructor
+@EnableGlobalMethodSecurity(prePostEnabled = true, securedEnabled = true)
 public class SecurityConfig {
     private final JwtAccessDeniedHandler jwtAccessDeniedHandler;
     private final JwtEntryPoint jwtEntryPoint;
@@ -31,7 +33,9 @@ public class SecurityConfig {
     @Bean
     public WebSecurityCustomizer webSecurityCustomizer() {
         return (web) -> web.ignoring()
-                .antMatchers( "/favicon.ico","/swagger-ui/**","/api-docs/**");
+                .antMatchers( "/favicon.ico",
+                        "/swagger.html","/swagger/**",
+                        "/swagger-ui/**","/v3/api-docs/**","/swagger-resources/**");
     }
 
     @Bean
@@ -44,17 +48,9 @@ public class SecurityConfig {
                 .exceptionHandling()
                 .authenticationEntryPoint(jwtEntryPoint)
                 .accessDeniedHandler(jwtAccessDeniedHandler)
-
-                // h2-console 을 위한 설정을 추가
-//                .and()
-//                .headers()
-//                .frameOptions()
-//                .sameOrigin()
-
                 // 시큐리티는 기본적으로 세션을 사용
                 // 여기서는 세션을 사용하지 않기 때문에 세션 설정을 Stateless 로 설정
                 .and()
-                .logout().disable()
                 .sessionManagement()
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
 
@@ -63,7 +59,8 @@ public class SecurityConfig {
                 .authorizeRequests()
                 .antMatchers("/api/member/**").permitAll()
                 .antMatchers("/admin").hasRole("ADMIN")
-                .anyRequest().hasRole("USER")   // 나머지 API 는 전부 인증 필요
+                .anyRequest().authenticated()
+//                .anyRequest().hasRole("USER")   // 나머지 API 는 전부 인증 필요
 
                 .and()
                 .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);

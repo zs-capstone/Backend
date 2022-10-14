@@ -23,6 +23,7 @@ public class RefreshToken {
     private Long expiration;
 
     public static RefreshToken createRefreshToken(String username, String refreshToken, Long remainingMilliSeconds) {
+        System.out.println("username: "+username+" refresh "+refreshToken+" 유효기간 "+remainingMilliSeconds);
         return RefreshToken.builder()
                 .id(username)
                 .refreshToken(refreshToken)

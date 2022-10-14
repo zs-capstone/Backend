@@ -3,6 +3,7 @@ package uos.capstone.backend.home.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.ResponseBody;
 import uos.capstone.backend.common.domain.Result;
 import uos.capstone.backend.Service.test.TestEatServiceImpl;
@@ -23,21 +24,22 @@ public class TestController {
 
     @GetMapping("/test/eat")
     @ResponseBody
-    public Result eatlist(){
+    public Result testEat(){
+//        System.out.println("accessToken 값: "+accessToken);
         Result result = eatService.retrieveList();
         return result;
     }
 
     @GetMapping("/test/hotel")
     @ResponseBody
-    public Result hotellist(){
+    public Result testHotel(){
         Result result = hotelService.retrieveList();
         return result;
     }
 
     @GetMapping("/test/place")
     @ResponseBody
-    public Result placelist(){
+    public Result testPlace(){
         Result result = placeService.retrieveList();
         return result;
     }

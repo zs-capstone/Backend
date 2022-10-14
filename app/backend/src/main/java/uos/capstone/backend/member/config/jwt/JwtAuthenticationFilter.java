@@ -19,6 +19,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
+// client 요청 시 거치는 filter
 @Slf4j
 @Component
 @RequiredArgsConstructor
@@ -28,12 +29,14 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
     private final CustomUserDetailService customUserDetailService;
     private final LogoutAccessTokenRedisRepository logoutAccessTokenRedisRepository;
 
+    // request 시 다른 메소드 이전에 맨 처음으로 불리는 filter
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
         String accessToken = getToken(request);
         if (accessToken != null) {
             checkLogout(accessToken);
             String username = jwtTokenUtil.getUsername(accessToken);
+            System.out.println("유저 네임: "+username);
             if (username != null) {
                 UserDetails userDetails = customUserDetailService.loadUserByUsername(username);
                 validateAccessToken(accessToken, userDetails);
@@ -45,6 +48,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
     private String getToken(HttpServletRequest request) {
         String headerAuth = request.getHeader("Authorization");
+//        System.out.println("Authorization 값: "+headerAuth);
         if (StringUtils.hasText(headerAuth) && headerAuth.startsWith("Bearer ")) {
             return headerAuth.substring(7);
         }

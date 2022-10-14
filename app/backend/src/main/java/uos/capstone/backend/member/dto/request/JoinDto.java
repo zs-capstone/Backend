@@ -7,23 +7,24 @@ import javax.validation.constraints.Email;
 import javax.validation.constraints.NotNull;
 
 @Getter @Setter
+@Schema(description = "회원가입 양식")
 @NoArgsConstructor @AllArgsConstructor @Builder
 public class JoinDto {
 
     @NotNull
-    @Schema(defaultValue = "김철수")
+    @Schema(example = "김철수")
     private String username;
 
     @NotNull
     @Email
-    @Schema(defaultValue = "1@example.com")
+    @Schema(example = "1@example.com")
     private String email;
 
     @NotNull
-    @Schema(defaultValue = "12345678")
+    @Schema(example = "12345678")
     private String password;
 
     @NotNull
-    @Schema(defaultValue = "노예1")
+    @Schema(example = "노예1")
     private String nickname;
 }

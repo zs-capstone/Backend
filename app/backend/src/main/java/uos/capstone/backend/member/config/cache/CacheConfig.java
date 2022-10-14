@@ -20,10 +20,12 @@ import java.time.Duration;
 @EnableCaching
 public class CacheConfig {
 
+    // redisConnectionFactory bean이 autowired됨
     @Bean
     public CacheManager redisCacheManager(RedisConnectionFactory redisConnectionFactory){
         RedisCacheConfiguration configuration = RedisCacheConfiguration.defaultCacheConfig()
                 .disableCachingNullValues()
+                // 60초 ttl 존재
                 .entryTtl(Duration.ofSeconds(CacheKey.DEFAULT_EXPIRE_SEC))
                 .computePrefixWith(CacheKeyPrefix.simple())
                 .serializeKeysWith(

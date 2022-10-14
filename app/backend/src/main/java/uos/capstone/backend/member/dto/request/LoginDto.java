@@ -12,10 +12,10 @@ public class LoginDto {
 
     @NotNull
     @Email
-    @Schema(defaultValue = "idwooin@naver.com")
+    @Schema(example = "1@example.com")
     private String email;
 
     @NotNull
-    @Schema(defaultValue = "12345678")
+    @Schema(example = "12345678")
     private String password;
 }

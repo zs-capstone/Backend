@@ -25,6 +25,8 @@ public class CustomUserDetails implements UserDetails {
 
     private String username;
     private String password;
+
+    // 특정 값 초기화 시 빌더 annotation에 default 사용
     @Builder.Default
     private List<String> roles = new ArrayList<>();
 
