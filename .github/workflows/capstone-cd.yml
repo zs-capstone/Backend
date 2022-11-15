@@ -8,7 +8,7 @@ on:
 env:
   AWS_REGION: ap-northeast-2
   PROJECT_NAME: capstone
-  S3_BUCKET_NAME: jeju-s3
+  S3_BUCKET_NAME: capstone-codedeploy
   CODE_DEPLOY_APPLICATION_NAME: capstone
   CODE_DEPLOY_DEPLOYMENT_GROUP_NAME: capstone
 
@@ -80,4 +80,4 @@ jobs:
         --application-name $CODE_DEPLOY_APPLICATION_NAME
         --deployment-config-name CodeDeployDefault.AllAtOnce
         --deployment-group-name $CODE_DEPLOY_DEPLOYMENT_GROUP_NAME
-        --s3-location bucket=$BUCKET_NAME,bundleType=zip,key=$PROJECT_NAME/$GITHUB_SHA.zip
+        --s3-location bucket=$S3_BUCKET_NAME,bundleType=zip,key=$PROJECT_NAME/$GITHUB_SHA.zip
