@@ -31,7 +31,7 @@ services:
       MYSQL_ROOT_PASSWORD: 1234
       TZ: 'Asia/Seoul'
     ports:
-      - "3306:3306"
+      - "3307:3307"
     command:
       - "mysqld"
       - "--character-set-server=utf8mb4"
