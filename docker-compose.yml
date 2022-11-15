@@ -6,7 +6,7 @@ services:
     container_name: capstone_nginx
     build:
       context: ./nginx
-      dockerfile: Dockerfile
+      dockerfile: DockerFile
     image: nginx
     ports:
       - "80:80"
@@ -42,7 +42,7 @@ services:
     container_name: capstone_backend
     build:
       context: ./
-      dockerfile: Dockerfile
+      dockerfile: DockerFile
     ports:
       - "8080:8080"
     expose:
