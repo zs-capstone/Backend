@@ -7,6 +7,7 @@ on:
 
 env:
   AWS_REGION: ap-northeast-2
+  PROJECT_NAME: capstone
   S3_BUCKET_NAME: jeju-s3
   CODE_DEPLOY_APPLICATION_NAME: capstone
   CODE_DEPLOY_DEPLOYMENT_GROUP_NAME: capstone
@@ -68,15 +69,15 @@ jobs:
 #          --s3-location bucket=$S3_BUCKET_NAME,key=$GITHUB_SHA.zip,bundleType=zip
 
     - name: Delete all files on s3
-      run: aws s3 rm s3://$BUCKET_NAME/ --recursive --include "*"
+      run: aws s3 rm s3://$S3_BUCKET_NAME/ --recursive --include "*"
 
     - name: Upload .zip file to s3
-      run: aws s3 cp --region ap-northeast-2 ./$GITHUB_SHA.zip s3://$BUCKET_NAME/$PROJECT_NAME/$GITHUB_SHA.zip
+      run: aws s3 cp --region ap-northeast-2 ./$GITHUB_SHA.zip s3://$S3_BUCKET_NAME/$PROJECT_NAME/$GITHUB_SHA.zip
 
     - name: Code deploy
       run: >
         aws deploy create-deployment
-        --application-name $CODE_DEPLOY_APP_NAME
+        --application-name $CODE_DEPLOY_APPLICATION_NAME
         --deployment-config-name CodeDeployDefault.AllAtOnce
-        --deployment-group-name $DEPLOYMENT_GROUP_NAME
+        --deployment-group-name $CODE_DEPLOY_DEPLOYMENT_GROUP_NAME
         --s3-location bucket=$BUCKET_NAME,bundleType=zip,key=$PROJECT_NAME/$GITHUB_SHA.zip
