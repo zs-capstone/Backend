@@ -4,12 +4,10 @@ import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import uos.capstone.backend.Model.Place;
-import uos.capstone.backend.Repository.test.TestPlaceRepository;
+import uos.capstone.backend.place.domain.Place;
+import uos.capstone.backend.home.Repository.test.TestPlaceRepository;
 
 import java.util.List;
-
-import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
 class TestPlaceServiceImplTest {

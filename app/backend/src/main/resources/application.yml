@@ -1,24 +1,19 @@
 spring:
   datasource:
-    url: jdbc:postgresql://localhost:5432/jeju_db
-    username: postgres
-    password: postgres
-    driver-class-name: org.postgresql.Driver
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/capstone?serverTimezone=UTC&characterEncoding=UTF-8
+    username: root
+    password: 1234
 
   jpa:
-    hibernate:
-      ddl-auto: update
-    database: postgresql
+    generate-ddl: true
+    database-platform: org.hibernate.spatial.dialect.mysql.MySQL56InnoDBSpatialDialect
+    open-in-view: false
+    show-sql: true
     properties:
       hibernate:
-        dialect: org.hibernate.dialect.PostgreSQLDialect
-        format_sql: true
-    generate-ddl: false
-
-  servlet:
-    multipart:
-      max-file-size: 5MB
-      max-request-size: 5MB
+        format_sql: false
+        ddl-auto: update
 
   redis:
     host: localhost
@@ -28,28 +23,30 @@ spring:
     pathmatch:
       matching-strategy: ant_path_matcher
 
+  logging:
+    level:
+      org:
+        hibernate:
+          SQL: DEBUG
+          type:
+            descriptor:
+              sql:
+                BasicBinder: TRACE
+
 jwt:
-  secret: c3ByaW5nLWJvb3Qtc2VjdXJpdHktand0LXR1dG9yaWFsLWppd29vbi1zcHJpbmctYm9vdC1zZWN1cml0eS1qd3QtdHV0b3JpYWwK
+  secret: my-32-character-ultra-secure-and-ultra-long-secret
 
-logging:
-  level:
-    org.hibernate.SQL: debug
 
-server:
-  port: 8082
+cloud:
+  aws:
+    credentials:
+      accessKey: ${AWS_ACCESS_KEY_ID}       # AWS IAM AccessKey 적기
+      secretKey: ${AWS_SECRET_ACCESS_KEY}   # AWS IAM SecretKey 적기
+    s3:
+      bucket: jeju-s3
+      dir: /img
+    region:
+      static: ap-northeast-2
+    stack:
+      auto: false
 
-#springdoc:
-#  version: v1.0.0
-#  packages-to-scan: uos.capstone.backend
-#  swagger-ui:
-#    path: /api-docs
-#    tags-sorter: alpha
-#    operations-sorter: alpha
-#  api-docs:
-#    path: /api-docs/json
-#    groups:
-#      enabled: true
-#  cache:
-#    disabled: true
-#  default-consumes-media-type: application/json;charset=UTF-8
-#  default-produces-media-type: application/json;charset=UTF-8
