@@ -1,5 +1,11 @@
 version: '3'
 
+networks:
+  front-network:
+    driver: bridge
+  back-network:
+    driver: bridge
+
 services:
   nginx:
     restart: always
@@ -10,16 +16,22 @@ services:
     image: nginx
     ports:
       - "80:80"
+      - "443:443"
     volumes:
       - ./nginx/conf.d:/etc/nginx/conf.d
     depends_on:
       - backend
+    networks:
+      - front-network
+      - back-network
 
   redis:
     image: redis:alpine
     container_name: capstone_redis
     ports:
       - "6379:6379"
+    networks:
+      - back-network
 
   database:
     restart: always
@@ -30,6 +42,8 @@ services:
       MYSQL_ROOT_HOST: '%'
       MYSQL_ROOT_PASSWORD: 1234
       TZ: 'Asia/Seoul'
+    networks:
+      - back-network
     ports:
       - "3307:3307"
     command:
@@ -39,10 +53,13 @@ services:
 
   backend:
     restart: always
-    container_name: backend
+    container_name: capstone_backend
     build:
       context: ./
       dockerfile: DockerFile
+    networks:
+      - front-network
+      - back-network
     ports:
       - "8080:8080"
     expose:
