@@ -57,6 +57,8 @@ services:
     build:
       context: ./
       dockerfile: DockerFile
+    env_file:
+      - .env
     networks:
       - front-network
       - back-network
