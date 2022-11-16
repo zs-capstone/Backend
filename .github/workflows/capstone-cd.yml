@@ -8,7 +8,7 @@ on:
 env:
   AWS_REGION: ap-northeast-2
   PROJECT_NAME: capstone
-  S3_BUCKET_NAME: capstone-jeju-codedeploy
+  S3_BUCKET_NAME: capstone4-s3
   CODE_DEPLOY_APPLICATION_NAME: capstone
   CODE_DEPLOY_DEPLOYMENT_GROUP_NAME: capstone-codedeploy
 
