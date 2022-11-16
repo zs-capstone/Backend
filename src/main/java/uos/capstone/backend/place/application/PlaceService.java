@@ -40,6 +40,7 @@ public class PlaceService {
 		return response;
 	}
 
+	@Transactional
 	public Long savePlaceLike(Long placeId, Long userId) {
 
 		return placeLikeRepository.save(
@@ -53,6 +54,7 @@ public class PlaceService {
 				.build()).getId();
 	}
 
+	@Transactional
 	public void deleteById(Long placeId, Long userId) {
 		placeLikeRepository.deleteByUserAndPlace(
 			userRepository.findById(userId)
