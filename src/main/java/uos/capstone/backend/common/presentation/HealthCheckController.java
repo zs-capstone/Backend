@@ -11,6 +11,6 @@ public class HealthCheckController {
 	@GetMapping
 	public String healthCheck() {
 
-		return "보드커 서버 정상 작동";
+		return "캡스톤 서버 정상 작동";
 	}
 }
