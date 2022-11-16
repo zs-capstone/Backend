@@ -69,9 +69,6 @@ services:
       SPRING_DATASOURCE_URL: jdbc:mysql://${RDS_ENDPOINT}:3306/capstone?useSSL=false
       SPRING_DATASOURCE_USERNAME: ${RDS_USER}
       SPRING_DATASOURCE_PASSWORD: ${RDS_PASSWORD}
-#      SPRING_DATASOURCE_URL: jdbc:mysql://capstone-db.cyqecu7zmnip.ap-northeast-2.rds.amazonaws.com:3306/capstone?useSSL=false
-#      SPRING_DATASOURCE_USERNAME: root
-#      SPRING_DATASOURCE_PASSWORD: capstone1234
       SPRING_REDIS_HOST: redis
     depends_on:
       - database
