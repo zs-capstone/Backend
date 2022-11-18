@@ -19,4 +19,7 @@ public class UserUpdateRequest {
 
 	@NotNull(message = "지역은 null일 수 없습니다")
 	private String region;
+
+	@NotNull(message = "자기소개는 null일 수 없습니다")
+	private String introduction;
 }

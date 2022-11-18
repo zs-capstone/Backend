@@ -33,24 +33,6 @@ services:
     networks:
       - back-network
 
-  database:
-    restart: always
-    container_name: capstone_mysql
-    image: mysql/mysql-server:5.7
-    environment:
-      MYSQL_DATABASE: capstone
-      MYSQL_ROOT_HOST: '%'
-      MYSQL_ROOT_PASSWORD: 1234
-      TZ: 'Asia/Seoul'
-    networks:
-      - back-network
-    ports:
-      - "3307:3307"
-    command:
-      - "mysqld"
-      - "--character-set-server=utf8mb4"
-      - "--collation-server=utf8mb4_unicode_ci"
-
   backend:
     restart: always
     container_name: capstone_backend

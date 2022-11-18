@@ -13,4 +13,5 @@ public class UserInfoResponse {
 	private String phone;
 	private String img;
 	private String region;
+	private String introduction;
 }
