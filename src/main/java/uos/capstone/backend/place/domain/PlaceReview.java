@@ -11,6 +11,7 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import uos.capstone.backend.common.domain.BaseEntity;
+import uos.capstone.backend.place.dto.request.PlaceReviewCreateRequest;
 import uos.capstone.backend.user.domain.User;
 
 @Entity
@@ -18,7 +19,7 @@ import uos.capstone.backend.user.domain.User;
 @AllArgsConstructor
 @Getter
 @Builder
-public class PlaceComment extends BaseEntity {
+public class PlaceReview extends BaseEntity {
 
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "userId")
@@ -28,6 +29,14 @@ public class PlaceComment extends BaseEntity {
 	@JoinColumn(name = "placeId")
 	private Place place;
 
+	@Column(nullable = false)
+	private Double rate;
+
 	@Column(nullable = false, columnDefinition = "TEXT")
-	private String text;
+	private String content;
+
+	public void updateReview(PlaceReviewCreateRequest placeReviewCreateRequest) {
+		this.rate = placeReviewCreateRequest.getRate();
+		this.content = placeReviewCreateRequest.getContent();
+	}
 }

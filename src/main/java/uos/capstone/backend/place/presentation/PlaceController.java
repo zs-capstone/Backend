@@ -2,6 +2,7 @@ package uos.capstone.backend.place.presentation;
 
 import java.net.URI;
 
+import javax.validation.Valid;
 import javax.websocket.server.PathParam;
 
 import org.springframework.data.domain.Pageable;
@@ -13,6 +14,8 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -21,6 +24,7 @@ import lombok.RequiredArgsConstructor;
 import uos.capstone.backend.common.config.security.CustomUserDetails;
 import uos.capstone.backend.common.dto.ResponseDto;
 import uos.capstone.backend.place.application.PlaceService;
+import uos.capstone.backend.place.dto.request.PlaceReviewCreateRequest;
 
 @RestController
 @RequestMapping("/api/places")
@@ -28,6 +32,16 @@ import uos.capstone.backend.place.application.PlaceService;
 public class PlaceController {
 
 	private final PlaceService placeService;
+
+	@GetMapping
+	public ResponseEntity<ResponseDto> findAll(
+		@PageableDefault(size=10,sort="title",direction = Sort.Direction.ASC) Pageable pageable
+	) {
+		ResponseDto responseDto = ResponseDto.of(
+			placeService.findAll(pageable));
+
+		return ResponseEntity.ok(responseDto);
+	}
 
 	@GetMapping("/{placeId}")
 	public ResponseEntity<ResponseDto> findById(@PathVariable("placeId") Long id) {
@@ -46,18 +60,45 @@ public class PlaceController {
 		return ResponseEntity.ok(responseDto);
 	}
 
-	@PostMapping("/{placeId}/like")
-	public ResponseEntity<ResponseDto> savePlaceLike(@PathVariable("placeId") Long id,
-		@AuthenticationPrincipal CustomUserDetails customUserDetails) {
-		final Long PLId = placeService.savePlaceLike(id,customUserDetails.getId());
-
-		return ResponseEntity.created(URI.create("/api/place/"+id+"/like/"+PLId)).build();
-	}
-
-	@DeleteMapping("/{placeId}/like")
+	@PutMapping("/{placeId}/like")
 	public ResponseEntity<ResponseDto> deletePlaceLike(@PathVariable("placeId") Long id,
 		@AuthenticationPrincipal CustomUserDetails customUserDetails) {
-		placeService.deleteById(id,customUserDetails.getId());
+		placeService.updatePlaceLikeById(id,customUserDetails.getId());
+
+		return ResponseEntity.noContent().build();
+	}
+
+	@GetMapping("/{placeId}/reviews")
+	public ResponseEntity<ResponseDto> findReviewsByPlaceId(@PathVariable("placeId") Long id,
+		@PageableDefault(size=10,sort="rate",direction = Sort.Direction.DESC) Pageable pageable) {
+		ResponseDto<?> response = ResponseDto.of(
+			placeService.findReviewsByPlaceId(id,pageable));
+
+		return ResponseEntity.ok(response);
+	}
+
+	@PostMapping("/{placeId}/review")
+	public ResponseEntity<ResponseDto> savePlaceReview(@PathVariable("placeId") Long id,
+		@Valid @RequestBody PlaceReviewCreateRequest placeReviewCreateRequest,
+		@AuthenticationPrincipal CustomUserDetails customUserDetails) {
+		Long reviewId = placeService.savePlaceReview(id,customUserDetails.getId(),placeReviewCreateRequest);
+
+		return ResponseEntity.created(URI.create("/api/places/"+id+"/review/"+reviewId)).build();
+	}
+
+	@PutMapping("/{placeId}/review/{reviewId}")
+	public ResponseEntity<ResponseDto> updatePlaceReviewById(@PathVariable("reviewId") Long id,
+		@Valid @RequestBody PlaceReviewCreateRequest placeReviewCreateRequest,
+		@AuthenticationPrincipal CustomUserDetails customUserDetails) {
+		placeService.updatePlaceReviewById(id,customUserDetails.getId(),placeReviewCreateRequest);
+
+		return ResponseEntity.noContent().build();
+	}
+
+	@DeleteMapping("/{placeId}/review/{reviewId}")
+	public ResponseEntity<ResponseDto> deleteByReviewId(@PathVariable("reviewId") Long id,
+		@AuthenticationPrincipal CustomUserDetails customUserDetails) {
+		placeService.deleteByReviewId(id,customUserDetails.getId());
 
 		return ResponseEntity.noContent().build();
 	}

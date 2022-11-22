@@ -12,4 +12,6 @@ public interface PlaceLikeRepository extends JpaRepository<PlaceLike,Long> {
 
 	Optional<PlaceLike> deleteByUserAndPlace(User user, Place place);
 
+	Optional<PlaceLike> findByUserAndPlace(User user, Place place);
+
 }
