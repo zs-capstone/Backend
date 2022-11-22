@@ -23,7 +23,7 @@ import uos.capstone.backend.common.dto.ResponseDto;
 import uos.capstone.backend.place.application.PlaceService;
 
 @RestController
-@RequestMapping("/api/place")
+@RequestMapping("/api/places")
 @RequiredArgsConstructor
 public class PlaceController {
 
