@@ -25,14 +25,19 @@ public class PlaceReview extends BaseEntity {
 	@JoinColumn(name = "userId")
 	private User user;
 
+	private String username;
+
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "placeId")
 	private Place place;
 
-	@Column(nullable = false)
+	@Column(nullable = true)
 	private Double rate;
 
-	@Column(nullable = false, columnDefinition = "TEXT")
+	@Column(nullable = true)
+	private String tags;
+
+	@Column(nullable = true, columnDefinition = "TEXT")
 	private String content;
 
 	public void updateReview(PlaceReviewCreateRequest placeReviewCreateRequest) {
