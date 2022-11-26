@@ -60,6 +60,8 @@ public class SurveyService {
 		}
 
 		surveyRepository.saveAll(surveyList);
+
+		// train 필요
 	}
 
 	@Transactional
