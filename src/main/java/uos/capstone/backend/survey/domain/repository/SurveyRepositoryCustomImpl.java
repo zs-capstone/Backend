@@ -1,12 +1,14 @@
 package uos.capstone.backend.survey.domain.repository;
 
 import static uos.capstone.backend.place.domain.QPlace.place;
+import static uos.capstone.backend.place.domain.QPlaceReview.placeReview;
 import static uos.capstone.backend.survey.domain.QSurvey.survey;
 
 import java.util.List;
 
 import com.querydsl.core.types.dsl.Expressions;
 import com.querydsl.core.types.dsl.NumberExpression;
+import com.querydsl.jpa.JPAExpressions;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 
 import lombok.RequiredArgsConstructor;
@@ -33,6 +35,14 @@ public class SurveyRepositoryCustomImpl implements SurveyRepositoryCustom {
 					place.tag
 				))
 			.from(place)
+			.where(
+				place.id.in(
+					JPAExpressions.select(placeReview.place.id)
+						.from(placeReview)
+						.groupBy(placeReview.place)
+						.having(placeReview.id.count().gt(19))
+				)
+			)
 			.orderBy(Expressions.numberTemplate(Double.class, "function('rand')").asc())
 			.limit(10)
 			.fetch();
