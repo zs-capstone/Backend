@@ -21,14 +21,14 @@ import uos.capstone.backend.user.domain.User;
 @Builder
 public class Survey extends BaseEntity {
 
-	@ManyToOne(fetch = FetchType.EAGER)
+	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name="placeId")
 	private Place place;
 
 	@Column(nullable = false)
 	private Integer rate;
 
-	@ManyToOne(fetch = FetchType.EAGER)
+	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name="userId")
 	private User user;
 

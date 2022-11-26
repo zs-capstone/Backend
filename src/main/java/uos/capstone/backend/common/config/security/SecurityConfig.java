@@ -37,7 +37,7 @@ public class SecurityConfig {
 	public WebSecurityCustomizer webSecurityCustomizer() {
 		// 해당 주소들은 인증 무시
 		return (web) -> web.ignoring()
-			.antMatchers("/api/auth/**","/api/healthCheck");
+			.antMatchers("/api/auth/**","/api/healthCheck/**");
 	}
 
 	@Bean

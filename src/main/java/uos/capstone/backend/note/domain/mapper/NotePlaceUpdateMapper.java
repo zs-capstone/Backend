@@ -6,14 +6,12 @@
 //
 // import uos.capstone.backend.note.domain.Note;
 // import uos.capstone.backend.note.dto.request.NoteCreateRequest;
+// import uos.capstone.backend.place.domain.Place;
 // import uos.capstone.backend.user.domain.User;
 //
 // @Mapper(componentModel = "spring")
-// public interface NoteCreateRequestMapper {
+// public interface NotePlaceUpdateMapper {
+// 	NotePlaceUpdateMapper INSTANCE = Mappers.getMapper(NotePlaceUpdateMapper.class);
 //
-// 	NoteCreateRequestMapper INSTANCE = Mappers.getMapper(NoteCreateRequestMapper.class);
-//
-// 	@Mapping(expression="java(dto.getRegion())", target="region")
-// 	Note toEntity(User user, NoteCreateRequest dto);
-//
+// 	Place toEntity(Long id);
 // }

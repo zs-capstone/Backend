@@ -2,7 +2,7 @@
 //
 // import org.springframework.data.jpa.repository.JpaRepository;
 //
-// import uos.capstone.backend.note.domain.Note;
+// import uos.capstone.backend.note.domain.Recommend;
 //
-// public interface NoteRepository extends JpaRepository<Note,Long> {
+// public interface RecommendRepository extends JpaRepository<Recommend,Long> {
 // }

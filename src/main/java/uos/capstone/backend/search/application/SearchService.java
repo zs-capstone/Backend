@@ -35,4 +35,12 @@ public class SearchService {
 
 		return responses;
 	}
+
+	// public Slice<NoteSearchResponse> findAllNoteBySearch(String content, Pageable pageable) {
+	// 	Slice<UserSearchResponse> responses = userRepository.findByNicknameContaining(content,pageable)
+	// 		.map(UserSearchResponseMapper.INSTANCE::toDto);
+	//
+	// 	return responses;
+	// }
+
 }

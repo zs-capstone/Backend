@@ -56,5 +56,21 @@ services:
       SPRING_DATASOURCE_PASSWORD: capstone1234
       SPRING_REDIS_HOST: redis
     depends_on:
-      - database
       - redis
+      - flask
+
+  flask:
+    restart: always
+    container_name: capstone_flask
+    build:
+      context: ./flask
+      dockerfile: DockerFile
+    environment:
+      - APP_NAME=CAPSTONE_AI
+      - DATABASE_URL=jdbc:mysql://capstone-db.cyqecu7zmnip.ap-northeast-2.rds.amazonaws.com:3306/capstone?useSSL=false
+    networks:
+      - back-network
+    ports:
+      - "6000:6000"
+    expose:
+      - 6000

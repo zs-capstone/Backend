@@ -43,8 +43,8 @@ cloud:
       accessKey: ${AWS_ACCESS_KEY_ID}       # AWS IAM AccessKey 적기
       secretKey: ${AWS_SECRET_ACCESS_KEY}   # AWS IAM SecretKey 적기
     s3:
-      bucket: jeju-s3
-      dir: /img
+      bucket: capstone4-s3
+      dir: /
     region:
       static: ap-northeast-2
     stack:
