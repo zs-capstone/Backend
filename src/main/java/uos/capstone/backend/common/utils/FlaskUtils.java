@@ -46,7 +46,7 @@ public class FlaskUtils {
 
 		RestTemplate restTemplate = new RestTemplate();
 		// String uri = "http://localhost:6000/eval?"+"username="+username+ "&day="+day.toString()+"&n="+n.toString();
-		String uri = "http://localhost:6000/eval";
+		String uri = "http://flask:6000/eval";
 		System.out.println(uri);
 		ResponseEntity<ListEvalResponse> responseEntity = restTemplate.exchange(uri, HttpMethod.POST, entity, ListEvalResponse.class);
 
