@@ -63,7 +63,7 @@ def eval():
         fl.append({
             "placeId": elem,
             "isUserPick": flag,
-            "day": idx//day +1,
+            "day": idx//n +1,
         })
 
     return jsonify({"listEvalResponse":fl})
