@@ -53,11 +53,17 @@ def eval():
             ex.append(org)
 
     a = ex + a[:len(a)-len(ex)]
-
+    exlen = len(ex)
     fl = []
-    for elem in a:
+    for idx,elem in enumerate(a):
+        if idx < exlen:
+            flag = True
+        else:
+            flag = False
         fl.append({
-            "placeId": elem
+            "placeId": elem,
+            "isUserPick": flag,
+            "day": idx//day +1,
         })
 
     return jsonify({"listEvalResponse":fl})

@@ -42,7 +42,7 @@ public class NoteController {
 
 	@GetMapping("/{noteId}")
 	public ResponseEntity<ResponseDto> findById(@AuthenticationPrincipal CustomUserDetails customUserDetails,
-		@RequestParam("noteId") Long noteId) {
+		@PathVariable("noteId") Long noteId) {
 		ResponseDto responseDto = ResponseDto.of(
 			noteService.findById(customUserDetails.getId(),noteId));
 
@@ -51,7 +51,7 @@ public class NoteController {
 
 	@PutMapping("/{noteId}")
 	public ResponseEntity<ResponseDto> updateById(@AuthenticationPrincipal CustomUserDetails customUserDetails,
-		@RequestParam("noteId") Long noteId,
+		@PathVariable("noteId") Long noteId,
 		@RequestBody @Valid NoteUpdateRequest noteUpdateRequest) {
 		noteService.updateById(customUserDetails.getId(), noteId, noteUpdateRequest);
 

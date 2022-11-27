@@ -96,8 +96,4 @@ public class Note extends BaseEntity {
 
 	}
 
-	// public void updateNotePlace(List<Place> placeList) {
-	// 	this.placeList = placeList;
-	// }
-
 }

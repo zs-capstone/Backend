@@ -30,4 +30,6 @@ public class NoteUpdateRequest {
 
 	private Integer maxPlacePerDay;
 
+	private List<Long> placeList;
+
 }

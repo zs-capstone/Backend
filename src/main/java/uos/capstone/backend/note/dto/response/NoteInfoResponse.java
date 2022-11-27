@@ -31,9 +31,7 @@ public class NoteInfoResponse {
 
 	private Integer maxPlacePerDay;
 
-	private List<Place> placeList;
-
-	private List<Recommend> recommendList;
+	private List<RecommendInfoResponse> recommendList;
 
 	@QueryProjection
 	public NoteInfoResponse(String title, LocalDate dayStart, LocalDate dayEnd,

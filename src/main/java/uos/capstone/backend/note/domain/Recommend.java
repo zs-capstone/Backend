@@ -3,6 +3,7 @@ package uos.capstone.backend.note.domain;
 import java.util.List;
 
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
@@ -32,5 +33,8 @@ public class Recommend extends BaseEntity {
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name="placeId")
 	private Place place;
+
+	@Column(nullable = false)
+	private Boolean isUserPick;
 
 }

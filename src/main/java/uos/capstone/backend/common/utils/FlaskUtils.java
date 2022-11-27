@@ -14,6 +14,7 @@ import org.springframework.web.client.RestTemplate;
 import lombok.RequiredArgsConstructor;
 import uos.capstone.backend.common.dto.response.EvalResponse;
 import uos.capstone.backend.common.dto.response.ListEvalResponse;
+import uos.capstone.backend.note.domain.Note;
 import uos.capstone.backend.note.dto.request.NoteCreateRequest;
 import uos.capstone.backend.user.domain.UserRepository;
 import uos.capstone.backend.user.exception.UserNotFoundException;
@@ -41,16 +42,31 @@ public class FlaskUtils {
 		body.put("n", n);
 
 		HttpEntity<String> entity = new HttpEntity<String>(body.toString(), httpHeaders);
-
-		// HttpEntity entity = new HttpEntity(httpHeaders);
-
 		RestTemplate restTemplate = new RestTemplate();
-		// String uri = "http://localhost:6000/eval?"+"username="+username+ "&day="+day.toString()+"&n="+n.toString();
-		String uri = "http://flask:6000/eval";
-		System.out.println(uri);
+		String uri = "http://localhost:6000/eval";
 		ResponseEntity<ListEvalResponse> responseEntity = restTemplate.exchange(uri, HttpMethod.POST, entity, ListEvalResponse.class);
 
-		List<EvalResponse> evalResponseList = responseEntity.getBody().getListEvalResponse();
+		return responseEntity.getBody();
+	}
+
+	public ListEvalResponse reevaluate(Long userId, Note note, List<Long> orgPlaceList) {
+		final String username = userRepository.findById(userId)
+			.orElseThrow(() -> new UserNotFoundException()).getNickname();
+		final Integer day = note.getDayEnd().compareTo(note.getDayStart()) +1;
+		final Integer n = note.getMaxPlacePerDay();
+
+		HttpHeaders httpHeaders = new HttpHeaders();
+		httpHeaders.setContentType(MediaType.APPLICATION_JSON);
+		JSONObject body = new JSONObject();
+		body.put("orgPlaceList", orgPlaceList);
+		body.put("username", username);
+		body.put("day", day);
+		body.put("n", n);
+
+		HttpEntity<String> entity = new HttpEntity<String>(body.toString(), httpHeaders);
+		RestTemplate restTemplate = new RestTemplate();
+		String uri = "http://localhost:6000/eval";
+		ResponseEntity<ListEvalResponse> responseEntity = restTemplate.exchange(uri, HttpMethod.POST, entity, ListEvalResponse.class);
 
 		return responseEntity.getBody();
 	}

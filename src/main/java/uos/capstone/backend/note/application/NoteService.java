@@ -2,22 +2,18 @@ package uos.capstone.backend.note.application;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import lombok.RequiredArgsConstructor;
 import uos.capstone.backend.common.dto.response.EvalResponse;
-import uos.capstone.backend.common.dto.response.ListEvalResponse;
 import uos.capstone.backend.common.utils.FlaskUtils;
 import uos.capstone.backend.note.domain.Note;
 import uos.capstone.backend.note.domain.Recommend;
-import uos.capstone.backend.note.domain.mapper.NoteInfoMapper;
 import uos.capstone.backend.note.domain.repository.NoteRepository;
 import uos.capstone.backend.note.domain.repository.RecommendRepository;
 import uos.capstone.backend.note.dto.request.NoteCreateRequest;
-import uos.capstone.backend.note.dto.request.NotePlaceUpdateRequest;
 import uos.capstone.backend.note.dto.request.NoteUpdateRequest;
 import uos.capstone.backend.note.dto.response.NoteInfoResponse;
 import uos.capstone.backend.note.exception.NoteNotFoundException;
@@ -25,7 +21,6 @@ import uos.capstone.backend.place.domain.Place;
 import uos.capstone.backend.place.domain.repository.PlaceRepository;
 import uos.capstone.backend.place.exception.PlaceNotExistException;
 import uos.capstone.backend.survey.domain.repository.SurveyRepository;
-import uos.capstone.backend.survey.exception.SurveyNotExistException;
 import uos.capstone.backend.survey.exception.UserNotDidSurveyException;
 import uos.capstone.backend.user.domain.User;
 import uos.capstone.backend.user.domain.UserRepository;
@@ -71,9 +66,10 @@ public class NoteService {
 		for (int i = 0; i < len; i++) {
 			recommendList.add(
 				Recommend.builder()
-					.day(i/n +1)
+					.day(listEvalResponse.get(i).getDay())
 					.place(findPlace(listEvalResponse.get(i).getPlaceId()))
 					.note(note)
+					.isUserPick(listEvalResponse.get(i).getIsUserPick())
 					.build());
 		}
 
@@ -97,9 +93,7 @@ public class NoteService {
 
 	public NoteInfoResponse findById(Long userId, Long noteId) {
 		validateNoteAuthor(findNote(noteId),findUser(userId));
-
-		NoteInfoResponse response =  NoteInfoMapper.INSTANCE.toDto(
-				findNote(noteId));
+		NoteInfoResponse response =  noteRepository.findOneNoteById(noteId);
 
 		return response;
 	}
@@ -111,25 +105,35 @@ public class NoteService {
 
 		note.updateNote(noteUpdateRequest);
 
-		if (!(noteUpdateRequest.getDayStart()!=null) ||
-			!(noteUpdateRequest.getDayEnd()!=null) ||
-			!(noteUpdateRequest.getMaxPlacePerDay()!=null)) {
-			// recommend 다시 update 필요
+		if (noteUpdateRequest.getDayStart()!=null ||
+			noteUpdateRequest.getDayEnd()!=null ||
+			noteUpdateRequest.getMaxPlacePerDay()!=null ||
+			noteUpdateRequest.getPlaceList()!=null) {
+
+			recommendRepository.deleteAllByNote(note);
+			List<Recommend> recommendList = new ArrayList<>();
+			List<Long> orgList = new ArrayList<>();
+
+			if (noteUpdateRequest.getPlaceList() != null) {
+				orgList = noteUpdateRequest.getPlaceList();
+			}
+
+			List<EvalResponse> listEvalResponse = flaskUtils.reevaluate(userId, note, orgList)
+				.getListEvalResponse();
+			final Integer len = listEvalResponse.size();
+
+			for (int i = 0; i < len; i++) {
+				recommendList.add(
+					Recommend.builder()
+						.day(listEvalResponse.get(i).getDay())
+						.place(findPlace(listEvalResponse.get(i).getPlaceId()))
+						.note(note)
+						.isUserPick(listEvalResponse.get(i).getIsUserPick())
+						.build());
+			}
+
+			recommendRepository.saveAll(recommendList);
 		}
-	}
-
-	@Transactional
-	public void updatePlaceById(Long userId, Long noteId, NotePlaceUpdateRequest notePlaceUpdateRequest) {
-		Note note = findNote(noteId);
-		validateNoteAuthor2(note, findUser(userId));
-
-		// 다시 recommend update 필요
-		// note.updateNotePlace(notePlaceUpdateRequest
-		// 	.getPlaceList()
-		// 	.stream()
-		// 	.map(x -> {return placeRepository.findById(x)
-		// 		.orElseThrow(() -> new PlaceNotExistException());})
-		// 	.collect(Collectors.toList()));
 	}
 
 	@Transactional

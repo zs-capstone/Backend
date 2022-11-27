@@ -4,5 +4,5 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 import uos.capstone.backend.note.domain.Note;
 
-public interface NoteRepository extends JpaRepository<Note,Long> {
+public interface NoteRepository extends JpaRepository<Note,Long>, NoteRepositoryCustom {
 }

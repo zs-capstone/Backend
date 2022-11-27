@@ -10,5 +10,11 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class EvalResponse {
+
 	private Long placeId;
+
+	private Boolean isUserPick;
+
+	private Integer day;
+
 }
