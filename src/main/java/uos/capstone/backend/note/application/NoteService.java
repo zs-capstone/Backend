@@ -71,7 +71,7 @@ public class NoteService {
 		for (int i = 0; i < len; i++) {
 			recommendList.add(
 				Recommend.builder()
-					.day(i%n +1)
+					.day(i/n +1)
 					.place(findPlace(listEvalResponse.get(i).getPlaceId()))
 					.note(note)
 					.build());
