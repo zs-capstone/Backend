@@ -33,6 +33,14 @@ jobs:
         distribution: 'temurin'
         java-version: '11'
 
+    - name: Generate Environment Variables File for Production
+      run: |
+        echo "REACT_APP_DOMAIN=$REACT_APP_DOMAIN" >> .env.production
+        echo "REACT_APP_DEBUG=$REACT_APP_DEBUG" >> .env.production
+      env:
+        REACT_APP_DOMAIN: ${{ secrets.REACT_APP_DOMAIN }}
+        REACT_APP_DEBUG: ${{ secrets.REACT_APP_DEBUG }}
+
     # (3) Gradle build (Test 제외)
 #    - name: Build with Gradle
 #      uses: gradle/gradle-build-action@0d13054264b0bb894ded474f08ebb30921341cee
@@ -81,3 +89,7 @@ jobs:
         --deployment-config-name CodeDeployDefault.AllAtOnce
         --deployment-group-name $CODE_DEPLOY_DEPLOYMENT_GROUP_NAME
         --s3-location bucket=$S3_BUCKET_NAME,bundleType=zip,key=$PROJECT_NAME/$GITHUB_SHA.zip
+      env:
+        AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+        AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        JWT_SECRET: ${{ secrets.JWT_SECRET }}
