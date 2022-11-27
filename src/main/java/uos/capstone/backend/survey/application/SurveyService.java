@@ -2,13 +2,16 @@ package uos.capstone.backend.survey.application;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import lombok.RequiredArgsConstructor;
 import uos.capstone.backend.place.domain.Place;
+import uos.capstone.backend.place.domain.PlaceReview;
 import uos.capstone.backend.place.domain.repository.PlaceRepository;
+import uos.capstone.backend.place.domain.repository.PlaceReviewRepository;
 import uos.capstone.backend.place.exception.PlaceNotExistException;
 import uos.capstone.backend.survey.domain.Survey;
 import uos.capstone.backend.survey.domain.mapper.SurveyCreateMapper;
@@ -29,6 +32,7 @@ public class SurveyService {
 	private final SurveyRepository surveyRepository;
 	private final UserRepository userRepository;
 	private final PlaceRepository placeRepository;
+	private final PlaceReviewRepository placeReviewRepository;
 
 	public List<SurveyCreateResponse> giveRandomSurvey(Long userId) {
 		validateSurvey(userId);
@@ -61,14 +65,25 @@ public class SurveyService {
 
 		surveyRepository.saveAll(surveyList);
 
-		// train 필요
+		List<PlaceReview> placeReviewList = surveyList.stream()
+			.map(x -> {return PlaceReview.builder()
+				.place(x.getPlace())
+				.user(x.getUser())
+				.rate(x.getRate())
+				.username(x.getUser().getNickname())
+				.build();})
+			.collect(Collectors.toList());
+
+		placeReviewRepository.saveAll(placeReviewList);
 	}
 
 	@Transactional
 	public void deleteById(Long userId) {
-		surveyRepository.deleteAllByUser(
-			userRepository.findById(userId)
-				.orElseThrow(() -> new UserNotFoundException()));
+		User user = userRepository.findById(userId)
+			.orElseThrow(() -> new UserNotFoundException());
+
+		surveyRepository.deleteAllByUser(user);
+		placeReviewRepository.deleteAllByUser(user);
 	}
 
 }

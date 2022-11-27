@@ -1,5 +1,7 @@
 package uos.capstone.backend.note.dto.request;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;
 
@@ -14,9 +16,9 @@ public class NoteUpdateRequest {
 
 	private String title;
 
-	private Date dayStart;
+	private LocalDate dayStart;
 
-	private Date dayEnd;
+	private LocalDate dayEnd;
 
 	private Integer adult;
 
@@ -24,6 +26,8 @@ public class NoteUpdateRequest {
 
 	private Integer animal;
 
-	private Boolean public_share;
+	private Boolean publicShare;
+
+	private Integer maxPlacePerDay;
 
 }

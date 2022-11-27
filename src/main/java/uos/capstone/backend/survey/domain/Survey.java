@@ -26,7 +26,7 @@ public class Survey extends BaseEntity {
 	private Place place;
 
 	@Column(nullable = false)
-	private Integer rate;
+	private Double rate;
 
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name="userId")
