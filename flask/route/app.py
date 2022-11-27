@@ -59,7 +59,7 @@ def eval():
         fl.append({
             "placeId": elem
         })
-    print(jsonify({"listEvalResponse":fl}))
+
     return jsonify({"listEvalResponse":fl})
 
 if __name__ == '__main__':
