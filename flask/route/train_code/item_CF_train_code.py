@@ -4,11 +4,6 @@ import numpy as np
 from numpy import dot
 from numpy.linalg import norm
 from sklearn.metrics.pairwise import cosine_similarity
-import math
-import heapq
-import copy
-import pickle
-import os
 import time
 
 class ItemCFtrain:
