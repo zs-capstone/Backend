@@ -61,7 +61,7 @@ public class ControllerAdvice {
 	@ExceptionHandler(HttpMessageNotReadableException.class)
 	public ResponseEntity<ExceptionResponse> handleHttpMessageNotReadableException(
 		final HttpMessageNotReadableException e) {
-		return toResponseEntity("요청값이 올바르지 않습니다.", HttpStatus.BAD_REQUEST);
+		return toResponseEntity(e.getMessage(), HttpStatus.BAD_REQUEST);
 	}
 
 	@ExceptionHandler(Exception.class)
