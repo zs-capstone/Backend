@@ -77,7 +77,7 @@ if __name__ == '__main__':
     app.database = database
     app.run(host='0.0.0.0', debug=True, port=6000)
 
-if __name__ == 'uwsgi_file__/route/app.py':
+if __name__ == 'uwsgi_file__route_app':
     app.config.from_pyfile("./config/config.py")
 	
     # 데이터 베이스와 연동해준다.
