@@ -33,15 +33,16 @@ jobs:
         distribution: 'temurin'
         java-version: '11'
 
-    - name: Generate Environment Variables File for Production
-      run: |
-        echo "REACT_APP_DOMAIN=$REACT_APP_DOMAIN" >> .env.production
-        echo "REACT_APP_DEBUG=$REACT_APP_DEBUG" >> .env.production
+    - name: Set Yaml
+      uses: microsoft/variable-substitution@v1
+      with:
+        files: ${{ env.RESOURCE_PATH }}
       env:
-        REACT_APP_DOMAIN: ${{ secrets.REACT_APP_DOMAIN }}
-        REACT_APP_DEBUG: ${{ secrets.REACT_APP_DEBUG }}
+        cloud.aws.credentials.accesskey : ${{ secrets.AWS_ACCESS_KEY_ID }}
+        cloud.aws.credentials.secretkey: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        jwt.secret: ${{ secrets.JWT_SECRET }}
 
-    # (3) Gradle build (Test 제외)
+      # (3) Gradle build (Test 제외)
 #    - name: Build with Gradle
 #      uses: gradle/gradle-build-action@0d13054264b0bb894ded474f08ebb30921341cee
 #      with:
