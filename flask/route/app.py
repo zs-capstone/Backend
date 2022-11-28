@@ -69,6 +69,7 @@ def eval():
     return jsonify({"listEvalResponse":fl})
 
 if __name__ == '__main__':
+    print("존나 열받네 시발 왜 안되는건지 전혀 이해를")
     app.config.from_pyfile("./config/config.py")
 	
     # 데이터 베이스와 연동해준다.
