@@ -81,4 +81,4 @@ if __name__ == 'uwsgi_file___route_app':
         
     database = create_engine(app.config['DB_URL'], encoding = 'utf-8', max_overflow = 0)
     app.database = database
-    app.run(host='0.0.0.0', debug=True, port=6000)
+    app.run(host='0.0.0.0', debug=True, port=6001)
