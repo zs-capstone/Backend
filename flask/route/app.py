@@ -5,6 +5,9 @@ from route.train_code.item_CF_train_code import ItemCFtrain
 import csv
 
 app = Flask(__name__)
+app.config.from_pyfile("./config/config.py")
+database = create_engine(app.config['DB_URL'], encoding = 'utf-8', max_overflow = 0)
+app.database = database
 
 def get_star_reviews():
     reviews = current_app.database.execute(text("""
@@ -83,8 +86,5 @@ def eval():
 #     app.database = database
 #     app.run(host='0.0.0.0', debug=True, port=6000)
 
-app.config.from_pyfile("./config/config.py")
-        
-database = create_engine(app.config['DB_URL'], encoding = 'utf-8', max_overflow = 0)
-app.database = database
-app.run(host='0.0.0.0', debug=True, port=6000)
+if __name__ == '__main__':
+    app.run(host='0.0.0.0', debug=True, port=6000)

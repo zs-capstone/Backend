@@ -70,7 +70,7 @@ services:
       dockerfile: DockerFile
     environment:
       - APP_NAME=CAPSTONE_AI
-      - DATABASE_URL=jdbc:mysql://capstone-db.cyqecu7zmnip.ap-northeast-2.rds.amazonaws.com:3306/capstone?useSSL=false
+      - DATABASE_URL=jdbc:mysql://${RDS_ENDPOINT}:3306/capstone?useSSL=false
     networks:
       - back-network
     ports:
