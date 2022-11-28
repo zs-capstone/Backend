@@ -79,7 +79,6 @@ def eval():
 
 app.config.from_pyfile("./config/config.py")
 	
-# 데이터 베이스와 연동해준다.
 database = create_engine(app.config['DB_URL'], encoding = 'utf-8', max_overflow = 0)
 app.database = database
 app.run(host='0.0.0.0', debug=True, port=6000)
