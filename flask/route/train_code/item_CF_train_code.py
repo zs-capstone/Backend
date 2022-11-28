@@ -163,7 +163,8 @@ class ItemCFtrain:
     #     return
 
     def eval(self):
-        print("사람 수"+self.df.keys())
+        print(self.target_person)
+        print(self.df.keys())
         if self.target_person in self.df.keys():
             a=self.recommendation_phase(self.target_person)
             if a != -1:
