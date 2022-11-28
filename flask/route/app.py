@@ -1,7 +1,7 @@
 from flask      import Flask, request, jsonify, current_app
 from flask.json import JSONEncoder
 from sqlalchemy import create_engine, text
-from route.train_code.item_CF_train_code import ItemCFtrain
+from train_code.item_CF_train_code import ItemCFtrain
 import csv
 
 app = Flask(__name__)
@@ -68,19 +68,18 @@ def eval():
 
     return jsonify({"listEvalResponse":fl})
 
-if __name__ == '__main__':
-    print("존나 열받네 시발 왜 안되는건지 전혀 이해를")
-    app.config.from_pyfile("./config/config.py")
+# if __name__ == '__main__':
+#     app.config.from_pyfile("./config/config.py")
 	
-    # 데이터 베이스와 연동해준다.
-    database = create_engine(app.config['DB_URL'], encoding = 'utf-8', max_overflow = 0)
-    app.database = database
-    app.run(host='0.0.0.0', debug=True, port=6000)
+#     # 데이터 베이스와 연동해준다.
+#     database = create_engine(app.config['DB_URL'], encoding = 'utf-8', max_overflow = 0)
+#     app.database = database
+#     app.run(host='0.0.0.0', debug=True, port=6000)
 
-if __name__ == 'uwsgi_file__route_app':
-    app.config.from_pyfile("./config/config.py")
+
+app.config.from_pyfile("./config/config.py")
 	
-    # 데이터 베이스와 연동해준다.
-    database = create_engine(app.config['DB_URL'], encoding = 'utf-8', max_overflow = 0)
-    app.database = database
-    app.run(host='0.0.0.0', debug=True, port=6000)
+# 데이터 베이스와 연동해준다.
+database = create_engine(app.config['DB_URL'], encoding = 'utf-8', max_overflow = 0)
+app.database = database
+app.run(host='0.0.0.0', debug=True, port=6000)
