@@ -1,7 +1,7 @@
 from flask      import Flask, request, jsonify, current_app
 from flask.json import JSONEncoder
 from sqlalchemy import create_engine, text
-from .train_code.item_CF_train_code import ItemCFtrain
+from route.train_code.item_CF_train_code import ItemCFtrain
 import csv
 
 app = Flask(__name__)
