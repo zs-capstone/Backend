@@ -26,7 +26,7 @@ def get_star_reviews():
             'rate'   : r['rate']
         })
 
-    with open("output.csv","w",newline="") as f:
+    with open("./output.csv","w",newline="") as f:
         title = "username,place_id,rate".split(",")
         cw = csv.DictWriter(f,title,delimiter=',', quotechar='|', quoting=csv.QUOTE_MINIMAL)
         cw.writeheader()
@@ -72,21 +72,6 @@ def eval():
         })
 
     return jsonify({"listEvalResponse":fl})
-
-# if __name__ == '__main__':
-#     app.config.from_pyfile("./config/config.py")
-	
-#     # 데이터 베이스와 연동해준다.
-#     database = create_engine(app.config['DB_URL'], encoding = 'utf-8', max_overflow = 0)
-#     app.database = database
-#     app.run(host='0.0.0.0', debug=True, port=6000)
-
-# if __name__ == 'uwsgi_file___route_app':
-#     app.config.from_pyfile("./config/config.py")
-        
-#     database = create_engine(app.config['DB_URL'], encoding = 'utf-8', max_overflow = 0)
-#     app.database = database
-#     app.run(host='0.0.0.0', debug=True, port=6000)
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', debug=True, port=6000)

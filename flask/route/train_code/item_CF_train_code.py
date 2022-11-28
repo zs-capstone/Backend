@@ -5,6 +5,7 @@ from numpy import dot
 from numpy.linalg import norm
 from sklearn.metrics.pairwise import cosine_similarity
 import time
+import os
 
 class ItemCFtrain:
     df = pd.DataFrame()
@@ -13,6 +14,7 @@ class ItemCFtrain:
 
     def __init__(self,target_person,day,n):
         self.df = pd.read_csv("./output.csv",quotechar="|")
+        print(os.path.realpath)
         self.target_person = target_person
         self.day = day
         self.n = n
