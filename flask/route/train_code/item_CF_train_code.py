@@ -14,7 +14,8 @@ class ItemCFtrain:
 
     def __init__(self,target_person,day,n):
         self.df = pd.read_csv("./output.csv",quotechar="|")
-        print(os.path.realpath)
+        print(self.df)
+        print(os.path.realpath(__file__))
         self.target_person = target_person
         self.day = day
         self.n = n
