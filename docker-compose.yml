@@ -74,6 +74,6 @@ services:
     networks:
       - back-network
     ports:
-      - "6001:6001"
+      - "6000:6000"
     expose:
-      - 6001
+      - 6000

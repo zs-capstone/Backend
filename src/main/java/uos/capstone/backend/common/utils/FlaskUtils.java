@@ -43,7 +43,7 @@ public class FlaskUtils {
 
 		HttpEntity<String> entity = new HttpEntity<String>(body.toString(), httpHeaders);
 		RestTemplate restTemplate = new RestTemplate();
-		String uri = "http://flask:6001/eval";
+		String uri = "http://flask:6000/eval";
 		ResponseEntity<ListEvalResponse> responseEntity = restTemplate.exchange(uri, HttpMethod.POST, entity, ListEvalResponse.class);
 
 		return responseEntity.getBody();
@@ -65,7 +65,7 @@ public class FlaskUtils {
 
 		HttpEntity<String> entity = new HttpEntity<String>(body.toString(), httpHeaders);
 		RestTemplate restTemplate = new RestTemplate();
-		String uri = "http://flask:6001/eval";
+		String uri = "http://flask:6000/eval";
 		ResponseEntity<ListEvalResponse> responseEntity = restTemplate.exchange(uri, HttpMethod.POST, entity, ListEvalResponse.class);
 
 		return responseEntity.getBody();
