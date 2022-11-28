@@ -35,13 +35,13 @@ jobs:
 
     - name: Create .env file
       run: >
-        touch .env
+        touch .env &&
         echo -e "AWS_ACCESS_KEY_ID=${{ secrets.AWS_ACCESS_KEY_ID }}\n
         AWS_SECRET_ACCESS_KEY=${{ secrets.AWS_SECRET_ACCESS_KEY }}\n
         JWT_SECRET=${{ secrets.JWT_SECRET }}\n
         RDS_ENDPOINT=${{ secrets.RDS_ENDPOINT }}\n
         RDS_USER=${{ secrets.RDS_USER }}\n
-        RDS_PASSWORD=${{ secrets.RDS_PASSWORD }}\n" >> .env
+        RDS_PASSWORD=${{ secrets.RDS_PASSWORD }}\n" >> .env &&
         cat .env
 
 #    - name: Set Yaml
