@@ -26,6 +26,8 @@ import uos.capstone.backend.place.dto.response.PlaceResponse;
 import uos.capstone.backend.place.dto.response.PlaceSimpleResponse;
 import uos.capstone.backend.place.dto.response.QPlaceResponse;
 import uos.capstone.backend.place.dto.response.QPlaceSimpleResponse;
+import uos.capstone.backend.search.dto.PlaceSearchResponse;
+import uos.capstone.backend.search.dto.QPlaceSearchResponse;
 
 @RequiredArgsConstructor
 public class PlaceRepositoryImpl implements PlaceRepositoryCustom{
@@ -132,5 +134,29 @@ public class PlaceRepositoryImpl implements PlaceRepositoryCustom{
 			}
 		}
 		return null;
+	}
+
+	@Override
+	public Slice<PlaceSearchResponse> findAllPlaceBySearch(String query, Pageable pageable) {
+		List<PlaceSearchResponse> content = queryFactory.select(
+				new QPlaceSearchResponse(
+					place.id,
+					place.title,
+					place.address,
+					place.thumbnail,
+					place.placeLikeList.size()
+				))
+			.from(place)
+			.offset(pageable.getOffset())
+			.limit(pageable.getPageSize()+1)
+			.orderBy(placeSort(pageable))
+			.fetch();
+
+		boolean hasNext = false;
+		if (content.size() > pageable.getPageSize()) {
+			content.remove(pageable.getPageSize());
+			hasNext = true;
+		}
+		return new SliceImpl<>(content, pageable, hasNext);
 	}
 }
