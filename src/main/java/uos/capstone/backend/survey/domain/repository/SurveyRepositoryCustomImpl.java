@@ -24,7 +24,7 @@ public class SurveyRepositoryCustomImpl implements SurveyRepositoryCustom {
 	private final JPAQueryFactory queryFactory;
 
 	@Override
-	public List<SurveyCreateResponse> findRandom10Place() {
+	public List<SurveyCreateResponse> findRandom20Place() {
 		List<SurveyCreateResponse> content = queryFactory.select(
 				new QSurveyCreateResponse(
 					place.id,
@@ -44,10 +44,10 @@ public class SurveyRepositoryCustomImpl implements SurveyRepositoryCustom {
 				)
 			)
 			.orderBy(Expressions.numberTemplate(Double.class, "function('rand')").asc())
-			.limit(10)
+			.limit(20)
 			.fetch();
 
-		if (content.size() != 10) {
+		if (content.size() != 20) {
 			throw new NotEnoughSurveyQueryException();
 		}
 

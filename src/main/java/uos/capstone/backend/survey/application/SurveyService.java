@@ -37,7 +37,7 @@ public class SurveyService {
 	public List<SurveyCreateResponse> giveRandomSurvey(Long userId) {
 		validateSurvey(userId);
 
-		return surveyRepository.findRandom10Place();
+		return surveyRepository.findRandom20Place();
 	}
 
 	private void validateSurvey(Long userId) {

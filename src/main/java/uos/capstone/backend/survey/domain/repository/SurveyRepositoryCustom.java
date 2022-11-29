@@ -7,6 +7,6 @@ import uos.capstone.backend.survey.dto.response.SurveyCreateResponse;
 
 public interface SurveyRepositoryCustom {
 
-	List<SurveyCreateResponse> findRandom10Place();
+	List<SurveyCreateResponse> findRandom20Place();
 
 }
