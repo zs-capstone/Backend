@@ -16,7 +16,9 @@ import uos.capstone.backend.user.domain.mapper.UserCreateMapper;
 import uos.capstone.backend.user.domain.mapper.UserMapper;
 import uos.capstone.backend.user.domain.mapper.UserTokenMapper;
 import uos.capstone.backend.user.dto.request.UserCreateRequest;
+import uos.capstone.backend.user.dto.request.UserEmailRequest;
 import uos.capstone.backend.user.dto.request.UserLoginRequest;
+import uos.capstone.backend.user.dto.request.UserNicknameRequest;
 import uos.capstone.backend.user.dto.response.UserTokenResponse;
 import uos.capstone.backend.user.exception.EmailExistsException;
 import uos.capstone.backend.user.exception.EmailNotExistsException;
@@ -53,6 +55,14 @@ public class AuthService {
 		User user = UserCreateMapper.INSTANCE.toEntity(userCreateRequest,password);
 
 		return userRepository.save(user).getId();
+	}
+
+	public void findEmailExists(final UserEmailRequest userEmailRequest) {
+		checkEmail(userEmailRequest.getEmail());
+	}
+
+	public void findNicknameExists(final UserNicknameRequest userNicknameRequest) {
+		checkNickname(userNicknameRequest.getNickname());
 	}
 
 	private void checkEmail(final String email) {
