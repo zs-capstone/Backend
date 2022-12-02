@@ -9,6 +9,7 @@ import uos.capstone.backend.common.config.jwt.enums.JwtExpirationEnums;
 import uos.capstone.backend.common.config.security.CustomUserDetailsService;
 import uos.capstone.backend.common.domain.refresh.RefreshToken;
 import uos.capstone.backend.common.domain.refresh.RefreshTokenRedisRepository;
+import uos.capstone.backend.survey.domain.repository.SurveyRepository;
 import uos.capstone.backend.user.domain.Token;
 import uos.capstone.backend.user.domain.User;
 import uos.capstone.backend.user.domain.UserRepository;
@@ -43,6 +44,7 @@ public class AuthService {
 	private final JwtTokenUtil jwtTokenUtil;
 	private final RefreshTokenRedisRepository refreshTokenRedisRepository;
 	private final UserRepository userRepository;
+	private final SurveyRepository surveyRepository;
 	private final CustomUserDetailsService customUserDetailsService;
 
 	private final PasswordEncoder passwordEncoder;
@@ -95,8 +97,9 @@ public class AuthService {
 		User user = userRepository.findById(Long.parseLong(id))
 			.orElseThrow(() -> new UserNotFoundException());
 
+		Boolean isSurvey = surveyRepository.existsByUser(user);
 
-		return UserTokenMapper.INSTANCE.toDto(token, UserMapper.INSTANCE.toDto(user));
+		return UserTokenMapper.INSTANCE.toDto(token, UserMapper.INSTANCE.toDto(user, isSurvey));
 	}
 
 	public UserTokenResponse login(final UserLoginRequest userLoginRequest) {
@@ -104,8 +107,10 @@ public class AuthService {
 			.orElseThrow(() -> new EmailNotExistsException());
 		checkPassword(userLoginRequest.getPassword(), user.getPassword());
 
+		Boolean isSurvey = surveyRepository.existsByUser(user);
+
 		UserTokenResponse response = UserTokenResponse.builder()
-			.userResponse(UserMapper.INSTANCE.toDto(user))
+			.userResponse(UserMapper.INSTANCE.toDto(user, isSurvey))
 			.accessToken(jwtTokenUtil.generateAccessToken(user.getId().toString()))
 			.refreshToken(saveRefreshToken(user.getId().toString()).getRefreshToken())
 			.build();

@@ -12,4 +12,5 @@ public class UserResponse {
 	private String nickname;
 	private String phone;
 	private String region;
+	private Boolean isSurvey;
 }

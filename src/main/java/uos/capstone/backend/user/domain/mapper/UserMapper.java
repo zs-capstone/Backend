@@ -13,6 +13,5 @@ public interface UserMapper {
 	UserMapper INSTANCE = Mappers.getMapper(UserMapper.class);
 
 	User toEntity(UserResponse dto);
-
-	UserResponse toDto(User user);
+	UserResponse toDto(User user, Boolean isSurvey);
 }
