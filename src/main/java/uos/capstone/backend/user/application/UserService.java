@@ -14,6 +14,8 @@ import uos.capstone.backend.common.domain.access.LogoutAccessTokenRedisRepositor
 import uos.capstone.backend.common.domain.refresh.RefreshTokenRedisRepository;
 import uos.capstone.backend.common.exception.business.FileUploadFailedException;
 import uos.capstone.backend.common.utils.S3Utils;
+import uos.capstone.backend.place.domain.repository.PlaceReviewRepository;
+import uos.capstone.backend.survey.domain.repository.SurveyRepository;
 import uos.capstone.backend.user.domain.User;
 import uos.capstone.backend.user.domain.UserRepository;
 import uos.capstone.backend.user.domain.mapper.UserInfoMapper;
@@ -40,6 +42,8 @@ public class UserService {
 	private final LogoutAccessTokenRedisRepository logoutAccessTokenRedisRepository;
 	private final JwtTokenUtil jwtTokenUtil;
 	private final AmazonS3Client amazonS3Client;
+	private final SurveyRepository surveyRepository;
+	private final PlaceReviewRepository placeReviewRepository;
 	@Value("${cloud.aws.s3.bucket}")
 	private String bucketName;
 
@@ -126,8 +130,12 @@ public class UserService {
 			LogoutAccessToken.of(token, username, ms)
 		);
 		refreshTokenRedisRepository.deleteById(username);
-		userRepository.deleteById(id);
 
+		User user = userRepository.findById(id)
+			.orElseThrow(()->new UserNotFoundException());
+		surveyRepository.deleteAllByUser(user);
+		placeReviewRepository.deleteAllByUser(user);
+		userRepository.deleteById(id);
 	}
 
 }
