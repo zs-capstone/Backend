@@ -147,6 +147,7 @@ public class PlaceRepositoryImpl implements PlaceRepositoryCustom{
 					place.placeLikeList.size()
 				))
 			.from(place)
+			.where(place.title.contains(query))
 			.offset(pageable.getOffset())
 			.limit(pageable.getPageSize()+1)
 			.orderBy(placeSort(pageable))
