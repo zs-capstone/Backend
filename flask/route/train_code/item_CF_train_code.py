@@ -14,8 +14,6 @@ class ItemCFtrain:
 
     def __init__(self,target_person,day,n):
         self.df = pd.read_csv("./output.csv",quotechar="|")
-        print(self.df)
-        print(os.path.realpath(__file__))
         self.target_person = target_person
         self.day = day
         self.n = n
@@ -166,7 +164,6 @@ class ItemCFtrain:
     #     return
 
     def eval(self):
-        print(self.df)
         if self.target_person in self.df.keys():
             a=self.recommendation_phase(self.target_person)
             if a != -1:
@@ -229,4 +226,4 @@ if __name__ == '__main__':
     start = time.time()
     a = ict.start()
     end = time.time()
-    print(end-start)
+    # print(end-start)

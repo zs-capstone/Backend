@@ -46,8 +46,6 @@ def eval():
     day = data['day']
     n = data['n']
 
-    print(username,day,n)
-
     get_star_reviews()
     ict = ItemCFtrain(username,int(day),int(n))
     a = ict.start()
