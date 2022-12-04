@@ -35,9 +35,9 @@ public class NoteController {
 	@PostMapping
 	public ResponseEntity<ResponseDto> save(@AuthenticationPrincipal CustomUserDetails customUserDetails,
 		@RequestBody @Valid NoteCreateRequest noteCreateRequest) {
-		noteService.save(customUserDetails.getId(),noteCreateRequest);
+		Long noteId = noteService.save(customUserDetails.getId(),noteCreateRequest);
 
-		return ResponseEntity.created(URI.create("/api/notes/")).build();
+		return ResponseEntity.created(URI.create("/api/notes/"+noteId)).build();
 	}
 
 	@GetMapping("/{noteId}")

@@ -45,7 +45,7 @@ public class NoteService {
 	private final FlaskUtils flaskUtils;
 
 	@Transactional
-	public void save(Long userId, NoteCreateRequest noteCreateRequest) {
+	public Long save(Long userId, NoteCreateRequest noteCreateRequest) {
 		if (!(surveyRepository.existsByUser(findUser(userId)))) {
 			throw new UserNotDidSurveyException();
 		}
@@ -72,8 +72,9 @@ public class NoteService {
 					.isUserPick(listEvalResponse.get(i).getIsUserPick())
 					.build());
 		}
-
 		recommendRepository.saveAll(recommendList);
+
+		return note.getId();
 	}
 
 	private Note findNote(Long noteId) {
