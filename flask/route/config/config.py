@@ -1,5 +1,4 @@
 db = {
-    # 데이터베이스에 접속할 사용자 아이디
     'user': 'root',
     # 사용자 비밀번호
     'password': 'capstone1234',
